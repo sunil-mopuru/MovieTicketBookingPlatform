@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Movie Ticket Booking Platform - Presentation</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #1a1a2e; color: #eee; }
+        .slide { min-height: 100vh; padding: 60px; display: flex; flex-direction: column; justify-content: center; border-bottom: 3px solid #4a4a6a; }
+        .slide:nth-child(even) { background: #16213e; }
+        .slide:nth-child(odd) { background: #1a1a2e; }
+        h1 { font-size: 3em; color: #00d4ff; margin-bottom: 20px; text-align: center; }
+        h2 { font-size: 2.2em; color: #00d4ff; margin-bottom: 30px; border-bottom: 2px solid #4a4a6a; padding-bottom: 10px; }
+        h3 { font-size: 1.5em; color: #ffa500; margin: 20px 0 10px 0; }
+        p, li { font-size: 1.2em; line-height: 1.8; }
+        ul { margin-left: 40px; margin-bottom: 20px; }
+        li { margin-bottom: 10px; }
+        .highlight { color: #00ff88; font-weight: bold; }
+        .code-block { background: #0d1117; border-radius: 8px; padding: 20px; margin: 20px 0; font-family: 'Consolas', monospace; font-size: 0.95em; overflow-x: auto; border-left: 4px solid #00d4ff; }
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 30px; }
+        .card { background: #252545; border-radius: 12px; padding: 25px; margin: 15px 0; border: 1px solid #4a4a6a; }
+        .card h3 { margin-top: 0; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 15px; text-align: left; border: 1px solid #4a4a6a; }
+        th { background: #00d4ff; color: #1a1a2e; }
+        tr:nth-child(even) { background: #252545; }
+        .badge { display: inline-block; padding: 5px 15px; border-radius: 20px; font-size: 0.9em; margin: 5px; }
+        .badge-green { background: #00ff88; color: #1a1a2e; }
+        .badge-blue { background: #00d4ff; color: #1a1a2e; }
+        .badge-orange { background: #ffa500; color: #1a1a2e; }
+        .center { text-align: center; }
+        .architecture-box { background: #0d1117; border: 2px solid #4a4a6a; border-radius: 10px; padding: 15px; margin: 10px; text-align: center; }
+        .arrow { color: #00d4ff; font-size: 2em; text-align: center; margin: 10px 0; }
+        .flow-container { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px; margin: 30px 0; }
+        .flow-box { background: linear-gradient(135deg, #00d4ff, #0066cc); color: #fff; padding: 15px 25px; border-radius: 8px; font-weight: bold; }
+        .flow-arrow { font-size: 1.5em; color: #ffa500; }
+        .subtitle { font-size: 1.5em; color: #aaa; text-align: center; margin-bottom: 40px; }
+        .tech-stack { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin: 30px 0; }
+        .tech-item { background: linear-gradient(135deg, #252545, #1a1a2e); border: 2px solid #00d4ff; padding: 15px 25px; border-radius: 8px; }
+        .section-number { font-size: 4em; color: #4a4a6a; position: absolute; top: 20px; right: 40px; }
+        .slide { position: relative; }
+    </style>
+</head>
+<body>
+
+<!-- Slide 1: Title -->
+<div class="slide center">
+    <h1>🎬 Online Movie Ticket Booking Platform</h1>
+    <p class="subtitle">Technical Assignment Submission</p>
+    <div class="tech-stack">
+        <div class="tech-item">Spring Boot 3.2</div>
+        <div class="tech-item">Java 17</div>
+        <div class="tech-item">JPA/Hibernate</div>
+        <div class="tech-item">REST APIs</div>
+    </div>
+    <div style="margin-top: 40px;">
+        <span class="badge badge-green">✅ READ Scenario Implemented</span>
+        <span class="badge badge-green">✅ WRITE Scenario Implemented</span>
+    </div>
+</div>
+
+<!-- Slide 2: Agenda -->
+<div class="slide">
+    <span class="section-number">01</span>
+    <h2>📋 Agenda</h2>
+    <div class="two-col">
+        <div>
+            <div class="card">
+                <h3>Part 1: Design</h3>
+                <ul>
+                    <li>Problem Overview</li>
+                    <li>High-Level Architecture</li>
+                    <li>Technology Stack</li>
+                    <li>Data Model Design</li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <div class="card">
+                <h3>Part 2: Implementation</h3>
+                <ul>
+                    <li>READ Scenario: Movie Search</li>
+                    <li>WRITE Scenario: Ticket Booking</li>
+                    <li>Design Patterns Used</li>
+                    <li>Non-Functional Requirements</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 3: Problem Overview -->
+<div class="slide">
+    <span class="section-number">02</span>
+    <h2>🎯 Problem Overview</h2>
+    <div class="two-col">
+        <div class="card">
+            <h3>Business Requirements</h3>
+            <ul>
+                <li>Users can <span class="highlight">search and browse</span> movies</li>
+                <li>Users can <span class="highlight">view showtimes</span> across theaters</li>
+                <li>Users can <span class="highlight">select seats</span> and <span class="highlight">book tickets</span></li>
+                <li>System handles <span class="highlight">concurrent bookings</span> safely</li>
+                <li>Support for <span class="highlight">payments</span> and <span class="highlight">cancellations</span></li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>Technical Challenges</h3>
+            <ul>
+                <li>🔒 <span class="highlight">Concurrency Control</span> - Prevent double-booking</li>
+                <li>⚡ <span class="highlight">Performance</span> - Fast search operations</li>
+                <li>🔄 <span class="highlight">Data Consistency</span> - ACID transactions</li>
+                <li>📈 <span class="highlight">Scalability</span> - Handle high traffic</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 4: High-Level Architecture -->
+<div class="slide">
+    <span class="section-number">03</span>
+    <h2>🏗️ High-Level Architecture</h2>
+    <div style="text-align: center;">
+        <div class="architecture-box" style="background: linear-gradient(135deg, #00d4ff, #0066cc); color: white;">
+            <strong>PRESENTATION LAYER</strong><br>
+            MovieController | BookingController | ShowController
+        </div>
+        <div class="arrow">⬇️</div>
+        <div class="architecture-box" style="background: linear-gradient(135deg, #00ff88, #00aa55); color: #1a1a2e;">
+            <strong>SERVICE LAYER</strong><br>
+            MovieService (READ) | BookingService (WRITE)
+        </div>
+        <div class="arrow">⬇️</div>
+        <div class="architecture-box" style="background: linear-gradient(135deg, #ffa500, #cc7700); color: #1a1a2e;">
+            <strong>REPOSITORY LAYER</strong><br>
+            MovieRepo | TheaterRepo | ShowRepo | BookingRepo | ShowSeatRepo
+        </div>
+        <div class="arrow">⬇️</div>
+        <div class="architecture-box" style="background: linear-gradient(135deg, #ff6b6b, #cc4444); color: white;">
+            <strong>DATABASE</strong><br>
+            H2 (Dev) / MySQL (Production)
+        </div>
+    </div>
+</div>
+
+<!-- Slide 5: Technology Stack -->
+<div class="slide">
+    <span class="section-number">04</span>
+    <h2>🛠️ Technology Stack</h2>
+    <table>
+        <tr><th>Layer</th><th>Technology</th><th>Purpose</th></tr>
+        <tr><td>Framework</td><td>Spring Boot 3.2.3</td><td>Application framework</td></tr>
+        <tr><td>Language</td><td>Java 17</td><td>Programming language</td></tr>
+        <tr><td>ORM</td><td>Spring Data JPA + Hibernate</td><td>Database access</td></tr>
+        <tr><td>Database</td><td>H2 / MySQL</td><td>Data persistence</td></tr>
+        <tr><td>Build</td><td>Maven</td><td>Dependency management</td></tr>
+        <tr><td>Utilities</td><td>Lombok</td><td>Boilerplate reduction</td></tr>
+        <tr><td>Validation</td><td>Jakarta Bean Validation</td><td>Input validation</td></tr>
+        <tr><td>Caching</td><td>Spring Cache</td><td>Performance optimization</td></tr>
+    </table>
+</div>
+
+<!-- Slide 6: Project Structure -->
+<div class="slide">
+    <span class="section-number">05</span>
+    <h2>📁 Project Structure</h2>
+    <div class="code-block">
+<pre>src/main/java/com/online/movie/ticket/booking/platform/
+│
+├── 📁 <span class="highlight">controller/</span>          # REST API Endpoints
+│   ├── MovieController       # Movie search APIs
+│   ├── BookingController     # Booking APIs
+│   └── ShowController        # Show/Seat APIs
+│
+├── 📁 <span class="highlight">service/</span>             # Business Logic
+│   ├── MovieService          # READ operations
+│   └── BookingService        # WRITE operations
+│
+├── 📁 <span class="highlight">repository/</span>          # Data Access Layer (9 interfaces)
+│
+├── 📁 <span class="highlight">entity/</span>              # JPA Entities (9 classes)
+│
+├── 📁 <span class="highlight">dto/</span>                 # Data Transfer Objects (10 classes)
+│
+├── 📁 <span class="highlight">exception/</span>           # Global Exception Handler
+│
+└── 📁 <span class="highlight">config/</span>              # CacheConfig, DataInitializer</pre>
+    </div>
+</div>
+
+<!-- Slide 7: Data Model -->
+<div class="slide">
+    <span class="section-number">06</span>
+    <h2>📊 Data Model (9 Entities)</h2>
+    <table>
+        <tr><th>Entity</th><th>Purpose</th><th>Key Attributes</th></tr>
+        <tr><td>Movie</td><td>Movie information</td><td>title, duration, genre, language</td></tr>
+        <tr><td>Theater</td><td>Cinema complex</td><td>name, address, city</td></tr>
+        <tr><td>Screen</td><td>Auditorium</td><td>screenNumber, screenType</td></tr>
+        <tr><td>Seat</td><td>Physical seat</td><td>rowLabel, seatNumber, category</td></tr>
+        <tr><td>Show</td><td>Movie screening</td><td>showDate, startTime, basePrice</td></tr>
+        <tr><td>ShowSeat</td><td>Seat availability</td><td>status, price</td></tr>
+        <tr><td>User</td><td>Customer</td><td>email, phone, role</td></tr>
+        <tr><td>Booking</td><td>Reservation</td><td>bookingNumber, status, amount</td></tr>
+        <tr><td>Payment</td><td>Transaction</td><td>transactionId, paymentMethod</td></tr>
+    </table>
+</div>
+
+<!-- Slide 8: READ Scenario -->
+<div class="slide">
+    <span class="section-number">07</span>
+    <h2>📖 READ Scenario: Movie Search</h2>
+    <div class="card">
+        <h3>Implementation: MovieServiceImpl.java</h3>
+        <div class="flow-container">
+            <div class="flow-box">User Request</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-box">MovieController</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-box">MovieService</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-box">Repository</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-box">Database</div>
+        </div>
+    </div>
+    <div class="two-col" style="margin-top: 30px;">
+        <div class="card">
+            <h3>Features Implemented</h3>
+            <ul>
+                <li>✅ Search movies with multiple filters</li>
+                <li>✅ Get shows grouped by theater</li>
+                <li>✅ View seat availability</li>
+                <li>✅ Caching for reference data</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>Key Methods</h3>
+            <ul>
+                <li><code>searchMovies()</code> - Multi-filter search</li>
+                <li><code>getMovieWithShows()</code> - Shows by theater</li>
+                <li><code>getSeatsForShow()</code> - Seat map</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 9: READ APIs -->
+<div class="slide">
+    <span class="section-number">08</span>
+    <h2>📖 READ Scenario: API Endpoints</h2>
+    <table>
+        <tr><th>Method</th><th>Endpoint</th><th>Description</th></tr>
+        <tr><td><span class="badge badge-blue">GET</span></td><td>/api/v1/movies/search</td><td>Search with filters</td></tr>
+        <tr><td><span class="badge badge-blue">GET</span></td><td>/api/v1/movies/{id}</td><td>Get movie details</td></tr>
+        <tr><td><span class="badge badge-blue">GET</span></td><td>/api/v1/movies/{id}/shows</td><td>Shows by city & date</td></tr>
+        <tr><td><span class="badge badge-blue">GET</span></td><td>/api/v1/shows/{id}/seats</td><td>Seat availability</td></tr>
+    </table>
+    <div class="code-block" style="margin-top: 30px;">
+<pre>GET /api/v1/movies/1/shows?city=Bangalore&date=2026-03-29
+
+Response:
+{
+  "movie": { "title": "The Dark Knight", "genre": "Action" },
+  "theaterShows": [
+    {
+      "theater": { "name": "PVR Cinemas" },
+      "shows": [
+        { "startTime": "10:00", "availableSeats": 95, "basePrice": 250 }
+      ]
+    }
+  ]
+}</pre>
+    </div>
+</div>
+
+<!-- Slide 10: WRITE Scenario -->
+<div class="slide">
+    <span class="section-number">09</span>
+    <h2>✏️ WRITE Scenario: Ticket Booking</h2>
+    <div class="card">
+        <h3>Implementation: BookingServiceImpl.java</h3>
+        <div class="flow-container">
+            <div class="flow-box">Select Seats</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-box">Lock Seats</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-box">Create Booking</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-box">Payment</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-box">Confirm</div>
+        </div>
+    </div>
+    <div class="two-col" style="margin-top: 30px;">
+        <div class="card">
+            <h3>Features Implemented</h3>
+            <ul>
+                <li>✅ Pessimistic locking for seats</li>
+                <li>✅ Dynamic pricing by category</li>
+                <li>✅ Coupon/discount support</li>
+                <li>✅ Booking confirmation</li>
+                <li>✅ Cancellation with refund</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>Concurrency Handling</h3>
+            <ul>
+                <li>🔒 <span class="highlight">Pessimistic Locking</span> on seats</li>
+                <li>🔄 <span class="highlight">SERIALIZABLE</span> isolation</li>
+                <li>📊 <span class="highlight">@Version</span> optimistic locking</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 11: WRITE APIs -->
+<div class="slide">
+    <span class="section-number">10</span>
+    <h2>✏️ WRITE Scenario: API Endpoints</h2>
+    <table>
+        <tr><th>Method</th><th>Endpoint</th><th>Description</th></tr>
+        <tr><td><span class="badge badge-green">POST</span></td><td>/api/v1/bookings</td><td>Create booking</td></tr>
+        <tr><td><span class="badge badge-orange">PUT</span></td><td>/api/v1/bookings/{id}/confirm</td><td>Confirm after payment</td></tr>
+        <tr><td><span class="badge badge-orange">PUT</span></td><td>/api/v1/bookings/{id}/cancel</td><td>Cancel booking</td></tr>
+    </table>
+    <div class="code-block" style="margin-top: 30px;">
+<pre>POST /api/v1/bookings
+{
+  "userId": 1,
+  "showId": 1,
+  "seatIds": [1, 2, 3],
+  "couponCode": "FLAT100"
+}
+
+Response:
+{
+  "bookingNumber": "BK-20260329-A1B2C",
+  "status": "PENDING",
+  "seatNumbers": ["A-1", "A-2", "A-3"],
+  "totalAmount": 750.00,
+  "discountAmount": 100.00,
+  "finalAmount": 650.00
+}</pre>
+    </div>
+</div>
+
+<!-- Slide 12: Pricing -->
+<div class="slide">
+    <span class="section-number">11</span>
+    <h2>💰 Dynamic Pricing Logic</h2>
+    <div class="two-col">
+        <div>
+            <h3>Seat Category Pricing</h3>
+            <table>
+                <tr><th>Category</th><th>Multiplier</th><th>Example (Base ₹300)</th></tr>
+                <tr><td>REGULAR</td><td>1.0x</td><td>₹300</td></tr>
+                <tr><td>PREMIUM</td><td>1.5x</td><td>₹450</td></tr>
+                <tr><td>VIP</td><td>2.0x</td><td>₹600</td></tr>
+                <tr><td>RECLINER</td><td>2.5x</td><td>₹750</td></tr>
+            </table>
+        </div>
+        <div>
+            <h3>Supported Coupons</h3>
+            <div class="card">
+                <ul>
+                    <li><span class="highlight">FLAT100</span> → ₹100 off</li>
+                    <li><span class="highlight">PERCENT10</span> → 10% off</li>
+                    <li><span class="highlight">PERCENT20</span> → 20% off</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 13: Design Principles -->
+<div class="slide">
+    <span class="section-number">12</span>
+    <h2>🎨 Design Principles & Patterns</h2>
+    <div class="two-col">
+        <div>
+            <h3>SOLID Principles</h3>
+            <table>
+                <tr><th>Principle</th><th>Implementation</th></tr>
+                <tr><td><span class="highlight">S</span>ingle Responsibility</td><td>Separate services</td></tr>
+                <tr><td><span class="highlight">O</span>pen/Closed</td><td>Service interfaces</td></tr>
+                <tr><td><span class="highlight">L</span>iskov Substitution</td><td>DTO inheritance</td></tr>
+                <tr><td><span class="highlight">I</span>nterface Segregation</td><td>Read/Write split</td></tr>
+                <tr><td><span class="highlight">D</span>ependency Inversion</td><td>Repository interfaces</td></tr>
+            </table>
+        </div>
+        <div>
+            <h3>Design Patterns</h3>
+            <table>
+                <tr><th>Pattern</th><th>Where Used</th></tr>
+                <tr><td>Repository</td><td>Data access</td></tr>
+                <tr><td>DTO</td><td>API contracts</td></tr>
+                <tr><td>Builder</td><td>Entity construction</td></tr>
+                <tr><td>Strategy</td><td>Price calculation</td></tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 14: NFRs -->
+<div class="slide">
+    <span class="section-number">13</span>
+    <h2>⚙️ Non-Functional Requirements</h2>
+    <div class="three-col">
+        <div class="card">
+            <h3>⚡ Performance</h3>
+            <ul>
+                <li>Response < 200ms</li>
+                <li>Database indexes</li>
+                <li>Caching enabled</li>
+                <li>Pagination support</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>📈 Scalability</h3>
+            <ul>
+                <li>Stateless design</li>
+                <li>Horizontal scaling</li>
+                <li>Connection pooling</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>🔒 Security</h3>
+            <ul>
+                <li>Input validation</li>
+                <li>Parameterized queries</li>
+                <li>JWT-ready</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 15: Summary -->
+<div class="slide center">
+    <span class="section-number">14</span>
+    <h2>✅ Summary: What We Built</h2>
+    <div class="tech-stack" style="margin: 40px 0;">
+        <div class="tech-item">9 JPA Entities</div>
+        <div class="tech-item">9 Repositories</div>
+        <div class="tech-item">2 Services</div>
+        <div class="tech-item">3 Controllers</div>
+        <div class="tech-item">10 DTOs</div>
+        <div class="tech-item">Unit Tests</div>
+    </div>
+    <div style="margin: 40px 0;">
+        <span class="badge badge-green" style="font-size: 1.2em; padding: 15px 30px;">✅ READ: Movie Search & Browse</span>
+        <span class="badge badge-green" style="font-size: 1.2em; padding: 15px 30px;">✅ WRITE: Ticket Booking System</span>
+    </div>
+    <div class="card" style="max-width: 600px; margin: 40px auto;">
+        <h3>Key Achievements</h3>
+        <ul>
+            <li>Complete REST API for movie booking</li>
+            <li>Concurrency-safe booking system</li>
+            <li>Clean layered architecture</li>
+            <li>Production-ready code structure</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Slide 16: Thank You -->
+<div class="slide center" style="background: linear-gradient(135deg, #1a1a2e, #16213e);">
+    <h1 style="font-size: 4em;">🎬 Thank You!</h1>
+    <p class="subtitle" style="font-size: 2em; margin-top: 30px;">Online Movie Ticket Booking Platform</p>
+    <div style="margin-top: 60px;">
+        <p style="font-size: 1.5em;">Questions?</p>
+    </div>
+</div>
+
+</body>
+</html>
+
